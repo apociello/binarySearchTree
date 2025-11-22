@@ -10,6 +10,31 @@ class Tree {
     constructor(array) {
         this.root = buildTree(array);
     }
+
+    insert(value) {
+      if (this.root === null) {
+        this.root = new Node(value);
+      }
+
+      let current = this.root;
+      let parent; 
+      while(current != null) {
+
+        if (current.data > value) {
+          parent = current;
+          current = current.left;
+        } else if(current.data < value) {
+          parent = current;
+          current = current.right;
+        } else {
+          return;
+        }
+      }
+      
+      if (parent.data > value) parent.left = new Node(value);
+      else parent.right = new Node(value);
+    }
+    
 }
 
 function createBST(array, start, end) {
@@ -45,4 +70,6 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 };
 
 const myTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-prettyPrint(myTree.root);
+myTree.insert(10);
+prettyPrint(myTree.root)
+
