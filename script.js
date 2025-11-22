@@ -8,21 +8,28 @@ class Node {
 
 class Tree {
     constructor(array) {
-        this.root = null //
+        this.root = buildTree(array);
     }
 }
 
-function buildTree(array, start, end) {
-    if(start > end) return null;
+function createBST(array, start, end) {
+  if(start > end) return null;
     const mid = Math.floor((start + end) / 2);
     const root = new Node(array[mid]);
 
-    root.left = buildTree(array, start, mid - 1);
-    root.right = buildTree(array, mid + 1, end);
+    root.left = createBST(array, start, mid - 1);
+    root.right = createBST(array, mid + 1, end);
 
     return root;
 }
 
+function buildTree(array) {
+  const setArray = [...new Set(array)]
+  const sortedArray = setArray.sort((a,b) => a - b);
+
+  const root = createBST(sortedArray, 0, sortedArray.length - 1);
+  return root;
+}
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
   if (node === null) {
@@ -37,5 +44,5 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
   }
 };
 
-
-prettyPrint(buildTree([1, 2, 3, 4, 5, 6,7,9], 0, 7));
+const myTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+prettyPrint(myTree.root);
