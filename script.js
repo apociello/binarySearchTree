@@ -82,6 +82,28 @@ class Tree {
         }
         
       }  
+
+
+    }
+
+    find(value) {
+      if (this.root === null) return;
+
+      let current = this.root;
+      while(current.data != value) {
+
+        if (current.data > value) {
+          current = current.left;
+        } else if(current.data < value) {
+          current = current.right;
+        } else {
+          return;
+        }
+
+        if (current == null) return;
+      }
+
+      return current;
     }
 }
 
@@ -120,8 +142,6 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 const myTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 
 prettyPrint(myTree.root);
-myTree.deleteItem(10);
-console.log("\n")
-prettyPrint(myTree.root);
+console.log(myTree.find(8));
 
 
