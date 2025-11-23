@@ -105,6 +105,21 @@ class Tree {
 
       return current;
     }
+
+    levelOrderForEach(callback) {
+      if (this.root === null) return;
+      let queue = [];
+      queue.push(this.root);
+
+      while(queue.length > 0) {
+        let current = queue.shift();
+        callback(current);
+
+        if(current.left != null) queue.push(current.left);
+        if(current.right != null) queue.push(current.right);
+
+      }
+    }
 }
 
 function createBST(array, start, end) {
@@ -139,9 +154,14 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
   }
 };
 
-const myTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+// Function to use as callback in levelOrderForEach(callback)
+function printData(node) {
+  console.log(node.data);
+}
 
+
+const myTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 prettyPrint(myTree.root);
-console.log(myTree.find(8));
+myTree.levelOrderForEach(printData);
 
 
