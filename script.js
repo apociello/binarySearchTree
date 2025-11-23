@@ -107,6 +107,9 @@ class Tree {
     }
 
     levelOrderForEach(callback) {
+      if (typeof callback !== "function") {
+        throw new Error("A callback function is required")
+      }
       if (this.root === null) return;
       let queue = [];
       queue.push(this.root);
@@ -162,6 +165,4 @@ function printData(node) {
 
 const myTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 prettyPrint(myTree.root);
-myTree.levelOrderForEach(printData);
-
-
+myTree.levelOrderForEach();
