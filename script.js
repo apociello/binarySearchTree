@@ -52,21 +52,36 @@ class Tree {
       if (current == null) return;
 
       if (current.left == null && current.right == null) {
-        // no child
+        // leaf (no child)
           if (parent.data > value) parent.left = null;
           else parent.right = null;
       } else if (current.left != null && current.right == null) {
-        // just left child
+        // node with left child
           if (parent.data > value) parent.left = current.left;
           else parent.right = current.left;
       } else if (current.left == null && current.right != null) {
-          // just right child
+          // node with right child
           if (parent.data > value) parent.left = current.right;
           else parent.right = current.right;
-      }
+      } else {
+        // node with 2 child
+        const nodeToDelete = current;
+        parent = current;
+        current = current.right; 
 
-      //STILL NEED TO CHECK WHEN DELETED NODE HAS 2 CHILDREN
-       
+        while( current.left != null) {
+          parent = current;
+          current = current.left;
+        }
+        
+        nodeToDelete.data = current.data;
+        if (nodeToDelete == parent) {
+          nodeToDelete.right = current.right;
+        } else {
+          parent.left = current.right;
+        }
+        
+      }  
     }
 }
 
@@ -105,7 +120,8 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 const myTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 
 prettyPrint(myTree.root);
-myTree.deleteItem(324);
+myTree.deleteItem(10);
+console.log("\n")
 prettyPrint(myTree.root);
 
 
