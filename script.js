@@ -110,6 +110,7 @@ class Tree {
       if (typeof callback !== "function") {
         throw new Error("A callback function is required")
       }
+
       if (this.root === null) return;
       let queue = [];
       queue.push(this.root);
@@ -123,6 +124,65 @@ class Tree {
 
       }
     }
+
+    preOrderForEach(callback) {
+      if (typeof callback !== "function") {
+        throw new Error("A callback function is required")
+      }
+      
+      function preOrder(currentNode) {
+        if (currentNode === null) return;
+        callback(currentNode);
+        preOrder(currentNode.left);
+        preOrder(currentNode.right);
+      }
+
+      preOrder(this.root)
+    }
+
+    inOrderForEach(callback) {
+      if (typeof callback !== "function") {
+        throw new Error("A callback function is required")
+      }
+      
+      function inOrder(currentNode) {
+        if (currentNode === null) return;
+        inOrder(currentNode.left);
+        callback(currentNode);
+        inOrder(currentNode.right);
+      }
+
+      inOrder(this.root)
+    }
+
+    postOrderForEach(callback) {
+      if (typeof callback !== "function") {
+        throw new Error("A callback function is required")
+      }
+      
+      function postOrder(currentNode) {
+        if (currentNode === null) return;
+        postOrder(currentNode.left);
+        postOrder(currentNode.right);
+        callback(currentNode);
+      }
+
+      postOrder(this.root)
+    }
+
+    height(value) {
+      const valueNode = this.find(value);
+      if (!valueNode) return null;
+
+      function computeHeight(node) {
+        if (node === null) return -1;
+        return 1 + Math.max(computeHeight(node.left), computeHeight(node.right));
+      }
+
+      return computeHeight(valueNode);
+
+    }
+    
 }
 
 function createBST(array, start, end) {
@@ -157,7 +217,8 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
   }
 };
 
-// Function to use as callback in levelOrderForEach(callback)
+// Function to use as callback in levelOrderForEach(callback)/preOrderForEach(callback)/
+// inOrderForEach(callback)/postOrderForEach(callback)
 function printData(node) {
   console.log(node.data);
 }
@@ -165,4 +226,4 @@ function printData(node) {
 
 const myTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 prettyPrint(myTree.root);
-myTree.levelOrderForEach();
+console.log(myTree.height(8));
