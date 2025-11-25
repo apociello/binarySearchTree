@@ -183,6 +183,25 @@ class Tree {
 
     }
     
+    depth(value) {
+      if (this.root === null) return;
+
+      let current = this.root;
+      let edges = 0;
+
+      while(current.data != value) {
+        if (current.data > value) {
+          current = current.left;
+          edges++;
+        } else if(current.data < value) {
+          current = current.right;
+          edges++;
+        }
+
+        if (current == null) return null;
+      }
+      return edges;
+    } 
 }
 
 function createBST(array, start, end) {
@@ -226,4 +245,4 @@ function printData(node) {
 
 const myTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 prettyPrint(myTree.root);
-console.log(myTree.height(8));
+console.log(myTree.depth(10));
