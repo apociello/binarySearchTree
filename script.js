@@ -202,6 +202,29 @@ class Tree {
       }
       return edges;
     } 
+
+    isBalanced() {
+      function subtreeHeight(node) {
+        if (node === null) return -1;
+        return 1 + Math.max(subtreeHeight(node.left), subtreeHeight(node.right));
+      }
+
+      function recursive(node) {
+        if (node === null) return 1;
+
+        const leftHeight = subtreeHeight(node.left);
+        const rightHeight = subtreeHeight(node.right);
+
+        if (Math.abs(leftHeight - rightHeight) > 1) return 0;
+        if (recursive(node.left) === 0) return 0;
+        if (recursive(node.right) === 0) return 0;
+
+        return 1;
+      }
+
+      return recursive(this.root);
+  }
+    
 }
 
 function createBST(array, start, end) {
@@ -236,8 +259,7 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
   }
 };
 
-// Function to use as callback in levelOrderForEach(callback)/preOrderForEach(callback)/
-// inOrderForEach(callback)/postOrderForEach(callback)
+// Callback
 function printData(node) {
   console.log(node.data);
 }
@@ -245,4 +267,9 @@ function printData(node) {
 
 const myTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 prettyPrint(myTree.root);
-console.log(myTree.depth(10));
+// myTree.insert(25);
+// myTree.insert(26);
+// myTree.insert(27);
+prettyPrint(myTree.root);
+console.log(myTree.height(8));
+console.log(myTree.isBalanced());
