@@ -9,6 +9,7 @@ class Node {
 class Tree {
     constructor(array) {
         this.root = buildTree(array);
+        return;
     }
 
     insert(value) {
@@ -137,7 +138,7 @@ class Tree {
         preOrder(currentNode.right);
       }
 
-      preOrder(this.root)
+      preOrder(this.root);
     }
 
     inOrderForEach(callback) {
@@ -224,6 +225,16 @@ class Tree {
 
       return recursive(this.root);
   }
+
+  rebalance() {
+    let values = [];
+
+    this.inOrderForEach((node) => {
+      values.push(node.data);
+    });
+
+    this.root = buildTree(values);
+  }
     
 }
 
@@ -264,12 +275,5 @@ function printData(node) {
   console.log(node.data);
 }
 
-
-const myTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+const myTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 33, 98]);
 prettyPrint(myTree.root);
-// myTree.insert(25);
-// myTree.insert(26);
-// myTree.insert(27);
-prettyPrint(myTree.root);
-console.log(myTree.height(8));
-console.log(myTree.isBalanced());
